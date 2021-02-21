@@ -1,4 +1,4 @@
-package tests;
+package steps;
 
 import io.qameta.allure.Step;
 
@@ -9,33 +9,25 @@ import static com.codeborne.selenide.Selenide.open;
 
 public class BaseSteps {
 
-    private static final String URL = "https://github.com";
-    private static final String REPOSITORY = "eroshenkoam/allure-example";
-    private static final String ISSUES = "Issues";
-    private static final String NUMBER = "#68";
+    @Step("Открываем главную страницу {url}")
+    public void openMainPage(String url) { open(url); }
 
-    @Step("Открываем главную страницу" + URL)
-    public void openMainPage(String url) {
-        open(url);
-    }
-
-    @Step("Ищем репозиторий" + REPOSITORY)
+    @Step("Ищем репозиторий {repository}")
     public void searchForRepository(String repository) {
         $("[name = q]").setValue(repository).pressEnter();
     }
 
-    @Step("Кликаем на репозиторий" + REPOSITORY)
+    @Step("Кликаем на репозиторий {repository}")
     public void openRepositoryIssues(String repository) {
         $(byLinkText(repository)).click();
     }
 
-    @Step("Переходим в раздел" + ISSUES)
+    @Step("Переходим в раздел {issues}")
     public void goToRepositoryIssues(String issues) {
         $(byText(issues)).click();
     }
 
-
-    @Step("Проверяем наличие " + ISSUES + "с номером " + NUMBER)
+    @Step("Проверяем наличие в раздел Issues с номером {number}")
     public void seeIssue(String number) {
         $(withText(number)).shouldBe(visible);
     }
